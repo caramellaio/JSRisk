@@ -1,3 +1,4 @@
+var neig_gesture;
 function void_region(){return {tank:1,player:null,path:null}}
 function region(_n_tanks,_player,_path){
     var self = this;
@@ -25,6 +26,7 @@ function region(_n_tanks,_player,_path){
     
     }
     
+    // click zone
     this.click=function(){
         console.log(self.path);
         if(self.selected===undefined)
@@ -41,9 +43,24 @@ function region(_n_tanks,_player,_path){
         self.click();
     }
     
+    this.path.onmouseover=function(){
+        console.log("move_over");
+        self.path.classList.remove(self.selected?"pressed":"land");
+        self.path.classList.add("mouseover");
+        neig_gest.mouse_over = self;
+    }
+    
+    this.path.onmouseout=function(){
+        console.log("move out");
+        self.path.classList.remove("mouseover");
+        self.path.classList.add(self.selected?"pressed":"land");
+        neig_gest.mouse_out = self;
+    }
+    //end click zone
 }
 
 function a(){
+    neig_gesture = new neig_gest();
     var rgn=[];
     var paths = document.getElementById("it").contentDocument.children[0].getElementsByTagName("g")[0].getElementsByTagName("path");
     for(var i=0;i<paths.length;i++)
