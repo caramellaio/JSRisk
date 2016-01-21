@@ -47,14 +47,14 @@ function region(_n_tanks,_player,_path){
         console.log("move_over");
         self.path.classList.remove(self.selected?"pressed":"land");
         self.path.classList.add("mouseover");
-        neig_gest.mouse_over = self;
+        neig_gesture.mouse_over = self;
     }
     
     this.path.onmouseout=function(){
         console.log("move out");
         self.path.classList.remove("mouseover");
         self.path.classList.add(self.selected?"pressed":"land");
-        neig_gest.mouse_out = self;
+        neig_gesture.mouse_out = self;
     }
     //end click zone
 }
