@@ -4,6 +4,7 @@ function region(_n_tanks,_player,_path){
     this.n_tanks=_n_tanks;
     this.player=_player;
     this.path=_path;
+    this.selected=false;
     this.atk=function(el){
         var a =[], b=[];
         for(var i=0;i<self.n_tanks;i++)
@@ -23,8 +24,29 @@ function region(_n_tanks,_player,_path){
         console.log("self:"+self.n_tanks+" el="+el.n_tanks);
     
     }
+    
+    this.click=function(){
+        console.log(self.path);
+        if(self.selected===undefined)
+            self.selected=false;
+        self.selected=!self.selected;
+        // continue here, remember: u don't need neighbourds
+        self.path.classList.remove(self.selected?"land":"pressed");
+        self.path.classList.add(self.selected?"pressed":"land");
+        console.log("pressed");
+    }
+    
+    this.path.onclick=function(){
+        
+        self.click();
+    }
+    
 }
 
-var rg1 = new region(3);
-var rg2 = new region(3);
-rg1.atk(rg2);
+function a(){
+    var rgn=[];
+    var paths = document.getElementById("it").contentDocument.children[0].getElementsByTagName("g")[0].getElementsByTagName("path");
+    for(var i=0;i<paths.length;i++)
+        rgn.push(new region(3,null,paths[i]));
+    rgn[0].atk(rgn[1]);
+}
