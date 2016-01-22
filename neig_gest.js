@@ -31,46 +31,29 @@ var neig_gest= function(){
 
     this.calculateM = function (rgn) {
         var lst = self.get_all_region_point_objs(rgn);
-        for (var i = 0; i < lst.length; i++) {
+        for (var i =0;i<lst.length;i++){
             for(var k=i+1;k<lst.length;k++)
-                if (lst[i].intersect(lst[k])&& !list[i].nei.contains(lst[k])) {
-                    lst[i].nei.add(lst[k]);
-                    lst[k].nei.add(lst[i]);
+                if(external_functions.intersect(lst[i].numbers,lst[k].numbers,function(a,b){return a.x==b.x&&a.y==b.y})){
+                    lst[i].region.nei.push(lst[k].region);
+                    lst[k].region.nei.push(lst[i].region);
+                    console.log([lst[i],lst[k]]);
                 }
         }
-        console.log(lst); 
     }
 
     this.get_all_region_point_objs=function(rgn){
-        var lst = [];
-        for (var i = 0; i < rgn.length; i++) {
-            var intrsct = function(num) {
-                return lst.contains(num)
+        var list=[];
+        for(var i = 0;i<rgn.length;i++){
+            var nums= external_functions.special_split(
+                [',','M','l','z','L'],
+                rgn[i].path.getAttribute('d')
+            ).filter(function(el){return el!="";});
+            list.push({region:rgn[i],numbers:[]});
+            for(var k=0;k<nums.length;k+=2){
+                list[i].numbers.push({x:nums[k],y:nums[k+1]});
             }
-            lst.push({ nums: (rgn[i].path.getAttribute("d").split(',')), region: rgn[i] });
-            var numss = lst[i].nums;
-            var intrsct = function (nums) {
-                for (var i = 0; i < nums.length; i++) {
-                    if (numss.contains(nums[i]))
-                        return true;
-                }
-                return false;
-            }
-            lst[i].intersect = intrsct;
-            lst[i].nei = [];
-            console.log(lst[i]);
-            for (var k = 0; k < lst[i].nums.length; k++)
-                lst[i].nums[k] = parseFloat(lst[i].nums[k].substring(1));
-            console.log(lst[i]);
+            
         }
-        console.log(lst);
-        return lst;
+        return list;
     }
-}
-
-function contains(array,elem){
-    for(var i =0;i<array.length;i++)
-        if(elem==array[i])
-            return true;
-    return false;
 }

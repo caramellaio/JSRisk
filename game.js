@@ -4,6 +4,7 @@ function region(_n_tanks,_player,_path){
     var self = this;
     this.n_tanks=_n_tanks;
     this.player=_player;
+    this.nei = [];
     this.path=_path;
     this.selected=false;
     this.atk=function(el){
@@ -35,6 +36,7 @@ function region(_n_tanks,_player,_path){
         // continue here, remember: u don't need neighbourds
         self.path.classList.remove(self.selected?"land":"pressed");
         self.path.classList.add(self.selected?"pressed":"land");
+        self.setNei(self.selected);
         console.log("pressed");
     }
     
@@ -44,17 +46,21 @@ function region(_n_tanks,_player,_path){
     }
     
     this.path.onmouseover=function(){
-        //console.log("move_over");
         self.path.classList.remove(self.selected?"pressed":"land");
         self.path.classList.add("mouseover");
-        neig_gesture.mouse_over = self;
     }
     
     this.path.onmouseout=function(){
         //console.log("move out");
         self.path.classList.remove("mouseover");
         self.path.classList.add(self.selected?"pressed":"land");
-        neig_gesture.mouse_out = self;
+    }
+    
+    this.setNei=function(b){
+        for(var i=0;i<self.nei.length;i++){
+            self.nei[i].path.classList.remove(b?"land":"nei");
+            self.nei[i].path.classList.add(b?"nei":"land");
+        }
     }
     //end click zone
 }
@@ -66,4 +72,5 @@ function a(){
     for(var i=0;i<paths.length;i++)
         rgn.push(new region(3,null,paths[i]));
     rgn[0].atk(rgn[1]);
+    neig_gesture.calculateM(rgn);
 }
