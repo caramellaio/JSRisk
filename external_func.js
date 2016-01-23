@@ -15,17 +15,21 @@ var external_funcs =function(){
         if(eq === undefined)
             eq= function(a,b){return a==b;};
         for(var i =0;i<array.length;i++)
-            if(eq(elem,array[i])){
-                console.log("contains")
+            if(eq(elem,array[i]))
                 return true;
-            }
+            
         return false;
     },
     
     this.intersect=function(array1,array2,eq){
         for(var i = 0;i<array2.length;i++)
-            if(self.contains(array1,array2[i],eq))
+            if(self.contains(array1,array2[i],eq)){
+                console.log("intersect: ");
+                console.log(array1);
+                console.log(array2); 
                 return true;
+            
+            }
         return false;
     }
 }
