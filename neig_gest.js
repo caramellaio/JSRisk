@@ -2,22 +2,6 @@
 
 var neig_gest= function(){
     var self=this;
-    
-    this._mouse_over= undefined;
-    this._mouse_out=undefined;
-    this.__defineSetter__("mouse_over",function(val){
-        this._mouse_over=val;
-        if(self._mouse_over!== undefined && self._mouse_out !== undefined){
-            self.add_neig();
-        }
-        }
-    );
-    
-    this.__defineSetter__("mouse_out",function(val){
-        this._mouse_over = undefined;
-        this._mouse_out=val;
-        });
-    
     /*this.add_neig=function(){
         var el1 = self._mouse_out;
         if(el1.neig === undefined)
