@@ -17,13 +17,9 @@ function region(_n_tanks,_player,_path){
         
         a.sort();
         b.sort();
-        console.log("a="+a);
-        console.log("b="+b);
         for(var i=0;i< Math.min(Math.min(a.length,b.length),3);i++){
             (a[i]>b[i]?el:self).n_tanks--;
-            console.log(a[i]+" "+b[i]);
         }
-        console.log("self:"+self.n_tanks+" el="+el.n_tanks);
     
     }
     
@@ -33,11 +29,9 @@ function region(_n_tanks,_player,_path){
         if(self.selected===undefined)
             self.selected=false;
         self.selected=!self.selected;
-        // continue here, remember: u don't need neighbourds
         self.path.classList.remove(self.selected?"land":"pressed");
         self.path.classList.add(self.selected?"pressed":"land");
         self.setNei(self.selected);
-        console.log("pressed");
     }
     
     this.path.onclick=function(){
@@ -51,7 +45,6 @@ function region(_n_tanks,_player,_path){
     }
     
     this.path.onmouseout=function(){
-        //console.log("move out");
         self.path.classList.remove("mouseover");
         self.path.classList.add(self.selected?"pressed":"land");
     }
