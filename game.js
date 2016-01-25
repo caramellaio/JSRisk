@@ -90,7 +90,7 @@ function player(_regions, _total_army, _color) {
             self.regions[i].path.classList.add("player"+self.id);
         }
     }
-    add_to_style(_color);
+    add_to_style(_color===undefined?"#"+external_functions.random_color():_color);
     this.apply_style();
     player_count++;
     console.log(player_count);
@@ -105,7 +105,7 @@ function a(){
         rgn.push(new region(3,paths[i]));
     rgn[0].atk(rgn[1]);
     neig_gesture.calculateM(rgn);
-    assign_regions([new player([],0,"#f0a0ff"),new player([],0,"#ff000a"),new player([],0,"#ff00ff"),new player([],0,"#dddd0d")],rgn);
+    assign_regions([new player([],0),new player([],0),new player([],0),new player([],0,"#111111")],rgn);
 }
 
 function assign_regions(players,regions){

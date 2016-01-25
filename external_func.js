@@ -30,15 +30,9 @@ var external_funcs =function(){
         return false;
     }
 
-    this.debug_inter = function (array1, array2, eq) {
-        var lst = [];
-        for (var i = 0; i < array2.length; i++) {
-            if (self.contains(array1, array2[i], eq)) {
-                lst.push(array2[i])
-            }
-        }
-
-        return lst;
+    
+    this.random_color = function(){
+        return Math.floor((Math.random() * 16777216)).toString(16)
     }
 }
 
