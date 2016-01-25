@@ -28,7 +28,7 @@ var neig_gest= function(){
 
     this.calculateM = function (rgn) {
         var delta = 0.9;
-        var equal = function(a,b){return a.x >= b.x - delta && a.x <= b.x + delta && a.y >= b.y - delta && b.y <= b.y + delta;};
+        var equal = function(a,b){return a.x >= b.x - delta && a.x <= b.x + delta && a.y >= b.y - delta && a.y <= b.y + delta;};
         var lst = self.get_all_region_point_objs(rgn);
         for (var i =0;i<lst.length-1;i++){
             for(var k=i+1;k<lst.length;k++)
