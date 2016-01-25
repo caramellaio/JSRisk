@@ -61,7 +61,9 @@ function player(_regions, _total_army, _color) {
     var self = this;
     this.id = player_count;
     this.regions = _regions;
-    this._army_count = _total_army;
+    /*this.__defineSetter__("regions",function(a){self._regions=a;self.apply_style();});
+    this.__defineGetter__("regions",function(){self.apply_style();return self._regions});
+    */this._army_count = _total_army;
     this.__defineGetter__("army_count", function () { var count = 0; for (var i = 0; i < self.regions.length; i++) { count += self.regions[i].n_tanks; } });
     var add_to_style = function (color) {
         //var style_text = document.createTextNode(".player" + self.id + " {fill-opacity: 1; stroke-opacity: 1;stroke-width:0.5;fill:"+color+"}")
@@ -72,7 +74,7 @@ function player(_regions, _total_army, _color) {
 				stroke:white;\
 				stroke-opacity: 1;\
 				stroke-width:0.5;\
-            }";
+            }\n";
         style.innerHTML+= text;
     }
     this.atk = function (str_rgn, dest_rgn) {
@@ -91,19 +93,33 @@ function player(_regions, _total_army, _color) {
     add_to_style(_color);
     this.apply_style();
     player_count++;
+    console.log(player_count);
 }
 
 function a(){
     neig_gesture = new neig_gest();
-    rgn = [];/*
-    style = document.createElement("style");
-    style.type = "text/css";*/
-    //document.head.appendChild(style);
+    rgn = [];
     var paths = document.getElementById("it").contentDocument.children[0].getElementsByTagName("g")[0].getElementsByTagName("path");
     style = document.getElementById("it").contentDocument.children[0].getElementsByTagName("style")[0];
     for(var i=0;i<paths.length;i++)
         rgn.push(new region(3,paths[i]));
     rgn[0].atk(rgn[1]);
-    var pl = new player([rgn[20],rgn[21]],6,"#00ff00");
     neig_gesture.calculateM(rgn);
+    assign_regions([new player([],0,"#f0a0ff"),new player([],0,"#ff000a"),new player([],0,"#ff00ff"),new player([],0,"#dddd0d")],rgn);
+}
+
+function assign_regions(players,regions){
+    var index_array = [];
+    var land_per_player = regions.length / players.length;
+    var remain= {num:land_per_player,index:0}
+    while(index_array.length < regions.length){
+        var rnd = Math.floor(Math.random() * regions.length);
+        if(!index_array.includes(rnd)){
+            remain.num--;
+            players[remain.index].regions.push(regions[rnd]);
+            players[remain.index].apply_style();
+            remain = remain.num == 0 ? {num:land_per_player,index:remain.index+1} : remain;
+            index_array.push(rnd);
+        }
+    }
 }
