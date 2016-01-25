@@ -11,6 +11,23 @@
 				stroke-opacity: 1;
 				stroke-width:0.5;
 			}
+            
+            .pressed
+            {
+
+                fill: #FFFF00;
+                fill-opacity: 1;
+                stroke:white;
+                stroke-opacity: 1;
+                stroke-width:0.5;
+            }
+
+            .mouseover
+            {
+				stroke:red;
+				stroke-width:1;
+            }
+
 		</style>
 
 		<amcharts:ammap projection="mercator" leftLongitude="6.624181" topLatitude="47.087088" rightLongitude="18.517034" bottomLatitude="35.490552"></amcharts:ammap>
