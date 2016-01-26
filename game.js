@@ -78,7 +78,7 @@ function player(_regions, _total_army, _color) {
         style.innerHTML+= text;
     }
     this.atk = function (str_rgn, dest_rgn) {
-        if (self.regions.includes(str_rgn)&& str_rgn.nei.includes(dest_rgn) && str_rgn.n_tanks>=2) {
+        if (self.regions.indexOf(str_rgn) != -1 && str_rgn.nei.indexOf(dest_rgn) != -1 && str_rgn.n_tanks>=2) {
             str_rgn.atk(dest_rgn);
         } else{alert("cannot attack!!!")}
     }
@@ -105,7 +105,7 @@ function a(){
         rgn.push(new region(3,paths[i]));
     rgn[0].atk(rgn[1]);
     neig_gesture.calculateM(rgn);
-    assign_regions([new player([],0),new player([],0),new player([],0),new player([],0,"#111111")],rgn);
+    assign_regions([new player([],0),new player([],0),new player([],0)],rgn);
 }
 
 function assign_regions(players,regions){
@@ -114,7 +114,8 @@ function assign_regions(players,regions){
     var remain= {num:land_per_player,index:0}
     while(index_array.length < regions.length){
         var rnd = Math.floor(Math.random() * regions.length);
-        if(!index_array.includes(rnd)){
+        console.log(index_array);
+        if(index_array.indexOf(rnd) == -1){
             remain.num--;
             players[remain.index].regions.push(regions[rnd]);
             players[remain.index].apply_style();
