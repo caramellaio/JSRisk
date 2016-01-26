@@ -1,8 +1,8 @@
 var neig_gest= function(){
     var self=this;
 
-    this.calculateM = function (rgn) {
-        var delta = 0.9;
+    this.calculateM = function (rgn,delta) {
+        delta = delta === undefined? 0.9:delta;
         var equal = function(a,b){return a.x >= b.x - delta && a.x <= b.x + delta && a.y >= b.y - delta && a.y <= b.y + delta;};
         var lst = self.get_all_region_point_objs(rgn);
         for (var i =0;i<lst.length-1;i++){
@@ -14,6 +14,28 @@ var neig_gest= function(){
         }
     }
     
+    this.find_island_nei = function(region,rgns,delta,region_points){
+        delta = delta === undefined ? 0.9 : delta;
+        rgns = rgns.filter(function (e) { return e.nei.length > 0 });
+        var equal = function(a,b){return a.x >= b.x - delta && a.x <= b.x + delta && a.y >= b.y - delta && a.y <= b.y + delta;};
+        region_points = region_points===undefined ? self.rel_to_abs_svg(region.path.getAttribute("d")) : region_points;
+        var ok = false;
+        for(var i = 0;i<rgns.length;i++) {
+            if (external_functions.intersect(region_points, self.rel_to_abs_svg(rgns[i].path.getAttribute("d")))) {
+                region.nei.push(rgns[i]);
+                if (rgns.nei.length > 1)
+                    return;
+            }
+        }
+        self.find_nei(region, rgns, delta + 1);
+    }
+
+    this.set_islands_nei = function (islands, rgns) {
+        for (var i = 0; i < islands.length; i++) {
+            self.find_island_nei(islands[i],rgns)
+        }
+    }
+
     this.get_all_region_point_objs= function(rgn){
         var lst = []
         for(var i=0;i<rgn.length;i++)
