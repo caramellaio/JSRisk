@@ -37,3 +37,18 @@ var external_funcs =function(){
 }
 
 var external_functions = new external_funcs();
+
+Array.prototype.subArray=function(startIndex,last){
+    var to_ret = [];
+    for(var i = startIndex;i<=last;i++)
+        to_ret.push(this[i]);
+    return to_ret;
+}
+
+Array.prototype.getMultipleElements=function(int_array){
+    var to_ret = [];
+    for(var i = 0;i < int_array.length;i++){
+        to_ret.push(this[int_array[i]]);
+    }
+    return to_ret;
+}
