@@ -28,6 +28,12 @@
 				stroke-width:1;
             }
 
+            .nei
+            {
+            
+                stroke:blue;
+                fill-opacity: 0.6
+            }
 		</style>
 
 		<amcharts:ammap projection="mercator" leftLongitude="6.624181" topLatitude="47.087088" rightLongitude="18.517034" bottomLatitude="35.490552"></amcharts:ammap>
