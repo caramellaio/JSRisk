@@ -25,7 +25,6 @@ function region(_n_tanks,_path,p_id){
     
     // click zone
     this.click=function(){
-        console.log(self.path);
         if(self.selected===undefined)
             self.selected=false;
         self.selected=!self.selected;
@@ -49,8 +48,8 @@ function region(_n_tanks,_path,p_id){
     
     this.setNei=function(b){
         for(var i=0;i<self.nei.length;i++){
-            self.nei[i].path.classList.remove(b?"land":"nei");
-            self.nei[i].path.classList.add(b?"nei":"land");
+            self.nei[i].path.classList.remove(b?"player"+self.nei[i].parent_id:"nei");
+            self.nei[i].path.classList.add(b?"nei":"player"+self.nei[i].parent_id);
         }
     }
     //end click zone
@@ -85,7 +84,7 @@ function player(_regions, _total_army, _color) {
     
     this.apply_style = function(){
         for(var i=0;i<self.regions.length;i++){
-            self.regions[i].path.classList.remove("land");
+            self.regions[i].path.classList.remove(self.regions[i].path.classList[0]);
             self.regions[i].parent_id = self.id;
             self.regions[i].path.classList.add("player"+self.id);
         }
@@ -93,7 +92,6 @@ function player(_regions, _total_army, _color) {
     add_to_style(_color===undefined?"#"+external_functions.random_color():_color);
     this.apply_style();
     player_count++;
-    console.log(player_count);
 }
 
 function a(){
@@ -108,19 +106,23 @@ function a(){
     assign_regions([new player([],0),new player([],0),new player([],0)],rgn);
 }
 
+
 function assign_regions(players,regions){
     var index_array = [];
-    var land_per_player = regions.length / players.length;
+    var land_per_player = Math.floor(regions.length / players.length);
     var remain= {num:land_per_player,index:0}
     while(index_array.length < regions.length){
         var rnd = Math.floor(Math.random() * regions.length);
-        console.log(index_array);
         if(index_array.indexOf(rnd) == -1){
-            remain.num--;
-            players[remain.index].regions.push(regions[rnd]);
-            players[remain.index].apply_style();
-            remain = remain.num == 0 ? {num:land_per_player,index:remain.index+1} : remain;
             index_array.push(rnd);
         }
     }
+    
+    for(var i = 0;i < players.length;i++){
+        var sub_array = index_array.subArray(i*land_per_player,i*land_per_player+land_per_player);
+        players[i].regions = regions.getMultipleElements(sub_array);
+        players[i].apply_style();
+    }
+    
 }
+
