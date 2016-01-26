@@ -12,22 +12,24 @@ var neig_gest= function(){
                     lst[k].region.nei.push(lst[i].region);
                 }
         }
+        
+        self.set_islands_nei(rgn.filter(function(e){return e.nei.length == 0;}),rgn);
     }
     
     this.find_island_nei = function(region,rgns,delta,region_points){
-        delta = delta === undefined ? 0.9 : delta;
+        delta = delta === undefined ? 1.9 : delta;
         rgns = rgns.filter(function (e) { return e.nei.length > 0 });
         var equal = function(a,b){return a.x >= b.x - delta && a.x <= b.x + delta && a.y >= b.y - delta && a.y <= b.y + delta;};
         region_points = region_points===undefined ? self.rel_to_abs_svg(region.path.getAttribute("d")) : region_points;
-        var ok = false;
+        
         for(var i = 0;i<rgns.length;i++) {
-            if (external_functions.intersect(region_points, self.rel_to_abs_svg(rgns[i].path.getAttribute("d")))) {
+            if (external_functions.intersect(region_points, self.rel_to_abs_svg(rgns[i].path.getAttribute("d")),equal)) {
                 region.nei.push(rgns[i]);
-                if (rgns.nei.length > 1)
-                    return;
+                rgns[i].nei.push(region);
             }
         }
-        self.find_nei(region, rgns, delta + 1);
+        if(region.nei.length == 0)
+            self.find_island_nei(region, rgns, delta + 20,region_points);
     }
 
     this.set_islands_nei = function (islands, rgns) {
