@@ -44,6 +44,7 @@ var neig_gest= function(){
             lst.push({numbers:self.rel_to_abs_svg(rgn[i].path.getAttribute("d"),i==20||i==21),region:rgn[i]});
         return lst;
     }
+
     this.rel_to_abs_svg=function(text){
         var array = text.replace(/[MLz]/g,',').split(',').filter(function(e){return e!=""});
         var to_ret = [];
