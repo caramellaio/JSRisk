@@ -1,8 +1,17 @@
 var neig_gesture,rgn,player_count=0,style;
 
+function write_tank_num(rgn){
+    var obj = neig_gesture.rel_to_abs_svg(rgn.path.getElementById("d"))[0];
+    
+    var text = document.createElementNS("http://www.w3.org/2000/svg", 'text'); //Create a path in SVG's namespace;
+    text.setAttribute("x",obj.x);
+    text.setAttribute("y",obj.y);
+    document.getElementById("it").contentDocument.children[0].appendChild(text);
+}
 function region(_n_tanks,_path,p_id){
     var self = this;
-    this.n_tanks=_n_tanks;
+    this._n_tanks=_n_tanks;
+    this.__defineSetter__("n_tanks",function(val){self._n_tanks = val;})
     this.nei = [];
     this.path=_path;
     this.selected = false;
