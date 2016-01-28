@@ -43,10 +43,10 @@ function region(_n_tanks,_path,p_id){
     }
     
     this.path.classList.clear = function () {
-        for (var i = 0; i < this.length; i++) {
-            self.path.classList.remove(self.path.classList[i]);
-        }
+        while (this.length > 0) 
+            this.remove(this[0]);
     };
+    
     this.path.onmouseout=function(){
         self.path.classList.remove("mouseover");
     }
