@@ -27,8 +27,8 @@ function region(_n_tanks,_path,p_id){
     this.click=function(){
         if(self.selected===undefined)
             self.selected=false;
-        self.selected=!self.selected;
-        self.path.classList.remove(self.selected?"player"+self.parent_id:"pressed");//self.selected?"land":"pressed");
+        self.selected = !self.selected;
+        self.path.classList.clear();
         self.path.classList.add(self.selected?"pressed":"player"+self.parent_id);
         self.setNei(self.selected);
     }
@@ -42,13 +42,18 @@ function region(_n_tanks,_path,p_id){
         self.path.classList.add("mouseover");
     }
     
+    this.path.classList.clear = function () {
+        for (var i = 0; i < this.length; i++) {
+            self.path.classList.remove(self.path.classList[i]);
+        }
+    };
     this.path.onmouseout=function(){
         self.path.classList.remove("mouseover");
     }
     
     this.setNei=function(b){
         for(var i=0;i<self.nei.length;i++){
-            self.nei[i].path.classList.remove(b?"player"+self.nei[i].parent_id:"nei");
+            self.nei[i].path.classList.clear();
             self.nei[i].path.classList.add(b?"nei":"player"+self.nei[i].parent_id);
         }
     }
